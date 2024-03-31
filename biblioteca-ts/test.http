@@ -1,0 +1,38 @@
+POST http://localhost:3000/livros
+Content-Type: application/json
+
+{
+  "title": "Livro 1",
+  "author": "Autor 1",
+  "isbn": "1234567890",
+  "published_at": 2020,
+  "publisher_id": "1"
+}
+
+###
+
+GET http://localhost:3000/livros/6b82ce23-e3c0-434c-9cdf-9a7ada13ebfa
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3000/livros/6b82ce23-e3c0-434c-9cdf-9a7ada13ebfa
+Content-Type: application/json
+
+{
+  "title": "Livro 2",
+  "author": "Autor 2",
+  "isbn": "1234567892",
+  "published_at": 2024,
+  "publisher_id": "1"
+}
+
+###
+
+GET http://localhost:3000/livros
+Content-Type: application/json
+
+###
+
+DELETE http://localhost:3000/livros/15009dda-32e2-41b8-b0a3-93a34e8c06ab
+Content-Type: application/json
