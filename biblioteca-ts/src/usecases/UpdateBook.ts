@@ -4,10 +4,19 @@ import { IBookRepository } from "../repositories/BookRepository";
 export class UpdateBook {
   constructor(private bookRepository: IBookRepository) {}
 
-  execute(input: UpdateBookInput): UpdateBookOutput {
+  async execute(input: UpdateBookInput): Promise<UpdateBookOutput> {
     const book = new Book(input.id, input.title, input.author, input.isbn, input.publishedAt, input.publisherId);
-    this.bookRepository.update(book);
-    return { book };
+    await this.bookRepository.update(book);
+    return {
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        isbn: book.isbn,
+        publishedAt: book.publishedAt,
+        publisherId: book.publisherId
+      }
+    };
   }
 }
 

@@ -3,16 +3,16 @@ import { IBookRepository } from "../repositories/BookRepository";
 export class DeleteBook {
   constructor(readonly bookRepository: IBookRepository) {}
 
-  execute(input: DeleteBookInput): DeleteBookOutput {
-    this.bookRepository.delete(input.id);
+  async execute(input: DeleteBookInput): Promise<DeleteBookOutput> {
+    await this.bookRepository.delete(input.id);
     return { id: input.id };
   }
 }
 
-export interface DeleteBookInput {
+interface DeleteBookInput {
   id: string;
 }
 
-export interface DeleteBookOutput {
+interface DeleteBookOutput {
   id: string;
 }

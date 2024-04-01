@@ -5,9 +5,18 @@ export class GetBooks {
     readonly bookRepository: IBookRepository
   ) {}
 
-  execute(): GetBooksOutput {
-    const books = this.bookRepository.findAll();
-    return { books };
+  async execute(): Promise<GetBooksOutput> {
+    const books = await this.bookRepository.findAll();
+    return {
+      books: books.map(book => ({
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        isbn: book.isbn,
+        publisherId: book.publisherId,
+        publishedAt: book.publishedAt
+      }))
+    };
   }
 }
 

@@ -1,9 +1,9 @@
-import { Livro } from '../entities/Book';
+import { Book } from '../entities/Book';
 
 interface IBookRepository {
-  findById(id: string): Livro | undefined;
-  findAll(): Livro[];
-  save(livro: Livro): void;
-  update(livro: Livro): void;
-  delete(id: string): void;
+  findById(id: string): Promise<Book | undefined>;
+  findAll(): Promise<Book[]>;
+  save(book: Book): Promise<void>;
+  update(book: Book): Promise<void>;
+  delete(id: string): Promise<void>;
 }

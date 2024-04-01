@@ -6,8 +6,8 @@ export class GetBook {
     readonly bookRepository: IBookRepository
   ) {}
 
-  execute(input: GetBookInput): GetBookOutput {
-    const book = this.bookRepository.findById(input.id);
+  async execute(input: GetBookInput): Promise<GetBookOutput> {
+    const book = await this.bookRepository.findById(input.id);
     if (!book) return { book: undefined }
     return {
       book: {

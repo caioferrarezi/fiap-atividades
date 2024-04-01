@@ -15,7 +15,7 @@ export class BooksController {
   ) {}
 
   async index(): Promise<Response> {
-    const output = this.getBooks.execute();
+    const output = await this.getBooks.execute();
     const books = output.books.map(book => ({
       id: book.id,
       titulo: book.title,
@@ -28,7 +28,7 @@ export class BooksController {
   }
 
   async show(httpRequest: Request): Promise<Response> {
-    const output = this.getBook.execute({ id: httpRequest.params.id });
+    const output = await this.getBook.execute({ id: httpRequest.params.id });
     if (!output.book) {
       return HttpResponse.notFound('Book not found');
     }
@@ -44,7 +44,7 @@ export class BooksController {
   }
 
   async create(httpRequest: Request): Promise<Response> {
-    const output = this.createBook.execute({
+    const output = await this.createBook.execute({
       title: httpRequest.body.title,
       author: httpRequest.body.author,
       isbn: httpRequest.body.isbn,
@@ -57,7 +57,7 @@ export class BooksController {
   }
 
   async update(httpRequest: Request): Promise<Response> {
-    const output = this.updateBook.execute({
+    const output = await this.updateBook.execute({
       id: httpRequest.params.id,
       title: httpRequest.body.title,
       author: httpRequest.body.author,
@@ -77,7 +77,7 @@ export class BooksController {
   }
 
   async delete(httpRequest: Request): Promise<Response> {
-    const output = this.deleteBook.execute({ id: httpRequest.params.id });
+    const output = await this.deleteBook.execute({ id: httpRequest.params.id });
     return HttpResponse.ok({ id: output.id });
   }
 }

@@ -1,3 +1,13 @@
+POST http://localhost:3000/editoras
+Content-Type: application/json
+
+{
+  "name": "Editora 1",
+  "document": "12345678901234"
+}
+
+###
+
 POST http://localhost:3000/livros
 Content-Type: application/json
 
@@ -6,17 +16,32 @@ Content-Type: application/json
   "author": "Autor 1",
   "isbn": "1234567890",
   "published_at": 2020,
-  "publisher_id": "1"
+  "publisher_id": "f9da1754-9fb6-4bac-8147-6029c7a14757"
 }
 
 ###
 
-GET http://localhost:3000/livros/6b82ce23-e3c0-434c-9cdf-9a7ada13ebfa
+GET http://localhost:3000/livros/c93a17c1-2b24-4156-a08d-672e405df0fc
 Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/livros/6b82ce23-e3c0-434c-9cdf-9a7ada13ebfa
+GET http://localhost:3000/editoras/f9da1754-9fb6-4bac-8147-6029c7a14757
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3000/editoras/f9da1754-9fb6-4bac-8147-6029c7a14757
+Content-Type: application/json
+
+{
+  "name": "Editora 2",
+  "document": "12345678901234"
+}
+
+###
+
+PUT http://localhost:3000/livros/a8a39a5e-7cf0-4a62-b5f2-6a13cde664c4
 Content-Type: application/json
 
 {
@@ -24,7 +49,7 @@ Content-Type: application/json
   "author": "Autor 2",
   "isbn": "1234567892",
   "published_at": 2024,
-  "publisher_id": "1"
+  "publisher_id": "f9da1754-9fb6-4bac-8147-6029c7a14757"
 }
 
 ###
@@ -34,5 +59,15 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/livros/15009dda-32e2-41b8-b0a3-93a34e8c06ab
+GET http://localhost:3000/editoras
+Content-Type: application/json
+
+###
+
+DELETE http://localhost:3000/livros/c93a17c1-2b24-4156-a08d-672e405df0fc
+Content-Type: application/json
+
+###
+
+DELETE http://localhost:3000/editoras/f9da1754-9fb6-4bac-8147-6029c7a14757
 Content-Type: application/json

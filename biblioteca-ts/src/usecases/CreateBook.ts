@@ -6,9 +6,9 @@ export class CreateBook {
     readonly bookRepository: IBookRepository
   ) {}
 
-  execute(input: CreateBookInput): CreateBookOutput {
+  async execute(input: CreateBookInput): Promise<CreateBookOutput> {
     const book = Book.create(input.title, input.author, input.isbn, input.publishedAt, input.publisherId);
-    this.bookRepository.save(book);
+    await this.bookRepository.save(book);
     return { id: book.id };
   }
 }
