@@ -1,14 +1,22 @@
 // express server
 import express from 'express';
-import booksRouter from './routes/BooksRouter';
-import publishersRouter from './routes/PublishersRouter';
+import { createBooksRouter } from './routes/BooksRouter';
+import { createPublishersRouter } from './routes/PublishersRouter';
+import { PgPromiseAdapter } from './database/PgPromiseAdapter';
+import { BookRepositoryDatabase } from './repositories/BookRepositoryDatabase';
+import { PublisherRepositoryDatabase } from './repositories/PublisherRepositoryDatabase';
 
 const app = express();
+const port = process.env.PORT || 3000;
+const dbUrl = process.env.POSTGRES_DATABASE_URL!;
+const connection = new PgPromiseAdapter(dbUrl);
+const bookRepository = new BookRepositoryDatabase(connection);
+const publisherRepository = new PublisherRepositoryDatabase(connection);
 
 app.use(express.json());
-app.use(booksRouter);
-app.use(publishersRouter);
+app.use(createBooksRouter(bookRepository));
+app.use(createPublishersRouter(publisherRepository));
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
