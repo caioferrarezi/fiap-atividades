@@ -4,6 +4,7 @@ import { GetPublisher } from "../usecases/GetPublisher";
 import { GetPublishers } from "../usecases/GetPublishers";
 import { UpdatePublisher } from "../usecases/UpdatePublisher";
 import { DeletePublisher } from "../usecases/DeletePublisher";
+import { GetBooksFromPublisher } from "../usecases/GetBooksFromPublisher";
 
 export class PublishersController {
   constructor(
@@ -11,7 +12,8 @@ export class PublishersController {
     private readonly getPublisher: GetPublisher,
     private readonly createPublisher: CreatePublisher,
     private readonly updatePublisher: UpdatePublisher,
-    private readonly deletePublisher: DeletePublisher
+    private readonly deletePublisher: DeletePublisher,
+    private readonly getBooksFromPublisher: GetBooksFromPublisher
   ) {}
 
   async index(): Promise<Response> {
@@ -35,6 +37,19 @@ export class PublishersController {
       name: output.publisher.name,
       document: output.publisher.document,
     });
+  }
+
+  async books(httpRequest: Request): Promise<Response> {
+    const publisherId = httpRequest.params.id;
+    const output = await this.getBooksFromPublisher.execute({ publisherId });
+    const books = output.books;
+    return HttpResponse.ok(books.map(book => ({
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      isbn: book.isbn,
+      published_at: book.publishedAt
+    })));
   }
 
   async create(httpRequest: Request): Promise<Response> {

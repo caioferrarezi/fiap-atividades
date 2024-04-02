@@ -1,3 +1,4 @@
+import { Book } from '../entities/Book';
 import { Publisher } from '../entities/Publisher';
 
 export interface IPublisherRepository {

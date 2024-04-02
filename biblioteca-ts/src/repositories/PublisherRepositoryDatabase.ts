@@ -1,4 +1,5 @@
 import { IDBConnection } from "../database/DatabaseConnection";
+import { Book } from "../entities/Book";
 import { Publisher } from "../entities/Publisher";
 import { IPublisherRepository } from "./PublisherRepository";
 

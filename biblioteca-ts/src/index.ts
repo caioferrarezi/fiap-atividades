@@ -15,7 +15,10 @@ const publisherRepository = new PublisherRepositoryDatabase(connection);
 
 app.use(express.json());
 app.use(createBooksRouter(bookRepository));
-app.use(createPublishersRouter(publisherRepository));
+app.use(createPublishersRouter(
+  bookRepository,
+  publisherRepository
+));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

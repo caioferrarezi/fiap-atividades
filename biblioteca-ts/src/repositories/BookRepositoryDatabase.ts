@@ -18,6 +18,16 @@ export class BookRepositoryDatabase implements IBookRepository {
     ))
   }
 
+  async findAllByPublisher(publisherId: string): Promise<Book[]> {
+    const booksData = await this.connection.query(`
+      select * from books
+      where publisher_id = $1
+    `, [publisherId]);
+    return booksData.map((bookData: any) => (
+      new Book(bookData.id, bookData.title, bookData.author, bookData.isbn, parseInt(bookData.published_at, 10), bookData.publisher_id)
+    ));
+  }
+
   async save(book: Book): Promise<void> {
     await this.connection.query(`
       insert into books (id, title, author, isbn, published_at, publisher_id)
