@@ -1,0 +1,18 @@
+extends ../layouts/base
+
+block content
+  main(class="container mx-auto mt-12")
+    h1(class="text-3xl font-bold mt-12 mb-6 text-slate-700")= user.name
+
+    table(class="table-auto w-full")
+      thead
+        tr(class="text-left border-b border-gray-200 *:py-2")
+          th Lançado em
+          th Horário inicial
+          th Horário final
+      tbody
+        each workHour in workHours
+          tr(class="*:py-2 *:even:bg-gray-100")
+            td= workHour.work_day
+            td= workHour.start_time
+            td= workHour.end_time
