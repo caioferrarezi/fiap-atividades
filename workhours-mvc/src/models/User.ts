@@ -14,6 +14,25 @@ export class User {
     return result
   }
 
+  static async create(data: UserInput): Promise<User> {
+    const db = pgp()(process.env.POSTGRES_DB_URL as string)
+    const user = await db.one('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [data.name, data.email])
+    await db.$pool.end()
+    return new User(user.id, user.name, user.email)
+  }
+
+  static async update(id: string, data: UserInput): Promise<void> {
+    const db = pgp()(process.env.POSTGRES_DB_URL as string)
+    await db.none('UPDATE users SET name = $1, email = $2 WHERE id = $3', [data.name, data.email, id])
+    await db.$pool.end()
+  }
+
+  static async delete(id: string): Promise<void> {
+    const db = pgp()(process.env.POSTGRES_DB_URL as string)
+    await db.none('DELETE FROM users WHERE id = $1', [id])
+    await db.$pool.end()
+  }
+
   static async findAll(): Promise<User[]> {
     const db = pgp()(process.env.POSTGRES_DB_URL as string)
     const result = await db.any('SELECT * FROM users')
@@ -27,4 +46,9 @@ export class User {
     await db.$pool.end()
     return new User(result.id, result.name, result.email)
   }
+}
+
+type UserInput = {
+  name: string
+  email: string
 }

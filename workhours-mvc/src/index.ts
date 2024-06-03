@@ -1,10 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
+import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
 import { join } from 'path';
 import { registerRoutes } from './routes';
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 app.set('view engine', 'pug');
 app.set('views', join(__dirname, 'views'));
