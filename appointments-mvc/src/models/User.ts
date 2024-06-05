@@ -1,8 +1,9 @@
 import pgp from 'pg-promise'
-import { WorkHour } from './WorkHour'
+import { Appointment } from './Appointment'
+import { DateHelper } from '../helpers/DateHelper'
 
 export class User {
-  public workHours?: WorkHour[] = undefined
+  public appointments?: Appointment[] = undefined
 
   constructor(public readonly id: string, public readonly name: string, public readonly email: string) {}
 
@@ -10,24 +11,17 @@ export class User {
     return this.name.split(' ').map(word => word[0]).join('')
   }
 
-  async getWorkHours(): Promise<any[]> {
+  async getAppointments(): Promise<any[]> {
     const db = pgp()(process.env.POSTGRES_DB_URL as string)
-    const result = await db.any('SELECT * FROM work_hours WHERE user_id = $1', this.id)
+    const result = await db.any('SELECT * FROM appointments WHERE user_id = $1 ORDER BY date DESC', this.id)
     await db.$pool.end()
-    return result.map(row => WorkHour.build({
-      id: row.id,
-      userId: row.user_id,
-      workDay: row.work_day,
-      startTime: row.start_time,
-      endTime: row.end_time
-    }))
+    return result.map(row => new Appointment(row.id, row.user_id, DateHelper.parse(row.date), row.start_time, row.end_time))
   }
 
-  static async create(data: UserInput): Promise<User> {
+  static async create(data: UserInput): Promise<void> {
     const db = pgp()(process.env.POSTGRES_DB_URL as string)
-    const user = await db.one('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [data.name, data.email])
+    await db.query('INSERT INTO users (name, email) VALUES ($1, $2)', [data.name, data.email])
     await db.$pool.end()
-    return new User(user.id, user.name, user.email)
   }
 
   static async update(id: string, data: UserInput): Promise<void> {
@@ -44,7 +38,7 @@ export class User {
 
   static async findAll(): Promise<User[]> {
     const db = pgp()(process.env.POSTGRES_DB_URL as string)
-    const result = await db.any('SELECT * FROM users as u  ORDER BY name')
+    const result = await db.any('SELECT * FROM users ORDER BY name')
     await db.$pool.end()
     return result.map(row => new User(row.id, row.name, row.email))
   }

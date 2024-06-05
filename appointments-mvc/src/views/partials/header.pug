@@ -1,0 +1,14 @@
+if messages.error
+  aside(class="w-full bg-red-200 text-red-700 text-center py-4")
+    p(class="container mx-auto")= messages.error[0]
+else if messages.success
+  aside(class="w-full bg-green-200 text-green-700 text-center py-4")
+    p(class="container mx-auto")= messages.success[0]
+else if messages.info
+  aside(class="w-full bg-yellow-200 text-yellow-700 text-center py-4")
+    p(class="container mx-auto")= messages.info[0]
+
+header(class="w-full border-b border-slate-200 h-16 flex items-center")
+  div(class="container mx-auto flex justify-between items-center")
+    h1(class="font-bold text-xl text-slate-700 hover:text-slate-500 cursor-pointer")
+      a(href="/") WorkHours
