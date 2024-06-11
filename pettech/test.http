@@ -1,0 +1,25 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "joao",
+  "password": "12345678901"
+}
+
+###
+
+POST http://localhost:3000/persons
+Content-Type: application/json
+
+{
+  "cpf": "12345678901",
+  "name": "João",
+  "birth": "2023-01-01",
+  "email": "joao@email.com",
+  "user_id": 1
+}
+
+###
+
+GET http://localhost:3000/users/1
+Content-Type: application/json
