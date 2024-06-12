@@ -1,10 +1,10 @@
-import { Person } from '@/entities/Person.entity'
-import { PersonRepository } from '@/repositories/Person.repository'
+import { IPerson } from '@/entities/models/Person.interface'
+import { IPersonRepository } from '@/repositories/Person.repository.interface'
 
 export class CreatePersonUseCase {
-  constructor(private readonly personRepository: PersonRepository) {}
+  constructor(private readonly personRepository: IPersonRepository) {}
 
-  handle(person: Person): Promise<Person | undefined> {
+  handle(person: IPerson): Promise<IPerson | undefined> {
     return this.personRepository.create(person)
   }
 }

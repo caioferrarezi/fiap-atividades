@@ -34,7 +34,7 @@ CREATE TABLE "address" (
   street VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
   state VARCHAR(2) NOT NULL,
-  zip_code VARCHAR(10) NOT NULL
+  zipcode VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE "person" (

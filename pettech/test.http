@@ -23,3 +23,23 @@ Content-Type: application/json
 
 GET http://localhost:3000/users/1
 Content-Type: application/json
+
+###
+
+POST http://localhost:3000/address
+Content-Type: application/json
+
+{
+  "street": "Rua de São Paulo, 123 - Vila Olímpia",
+  "city": "São Paulo",
+  "state": "SP",
+  "zipcode": "01234567",
+  "person_id": 1
+}
+
+###
+
+GET http://localhost:3000/address/1?page=1&limit=10
+Content-Type: application/json
+
+###
