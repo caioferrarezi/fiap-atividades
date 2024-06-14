@@ -9,5 +9,8 @@ export async function show(request: FastifyRequest, reply: FastifyReply) {
   const { id } = registerParamsSchema.parse(request.params)
   const findWithPersonUseCase = makeFindWithPersonUseCase()
   const user = await findWithPersonUseCase.handle(id)
-  return reply.status(200).send(user)
+  return reply.status(200).send({
+    id: user?.id,
+    username: user?.username,
+  })
 }
