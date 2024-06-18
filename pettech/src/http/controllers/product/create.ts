@@ -1,3 +1,4 @@
+import { makeStockGateway } from '@/gateways/factory/make-stock'
 import { makeCreateProductUseCase } from '@/use-cases/factory/make-create-product'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
@@ -22,6 +23,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     registerBodySchema.parse(request.body)
 
   const createProductUseCase = makeCreateProductUseCase()
+  const stockGateway = makeStockGateway()
   const product = await createProductUseCase.handle({
     name,
     description,
@@ -29,5 +31,14 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     price,
     categories,
   })
+  console.log(request.headers)
+  await stockGateway.createProductInStock(
+    {
+      name: product.name,
+      quantity: 0,
+      relationId: product.id!,
+    },
+    request.headers.authorization as string,
+  )
   return reply.status(201).send(product)
 }

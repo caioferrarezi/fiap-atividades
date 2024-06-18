@@ -8,6 +8,16 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:3000/users/sign-in
+Content-Type: application/json
+
+{
+  "username": "joao",
+  "password": "12345678901"
+}
+
+###
+
 POST http://localhost:3000/persons
 Content-Type: application/json
 
@@ -46,9 +56,10 @@ Content-Type: application/json
 
 POST http://localhost:3000/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvYW8iLCJpYXQiOjE3MTg2NzM3MDgsImV4cCI6MTcxODY3NzMwOH0.5AkU7fETcbdMdx5Kx4tcDnpifmr0bzoraJaJe7UwV_I
 
 {
-  "name": "Bolinha",
+  "name": "Bolinha integração",
   "description": "Bolinha legal",
   "image_url": "https://via.placeholder.com/150",
   "price": 49.90,
